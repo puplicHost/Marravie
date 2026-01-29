@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Marravie</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    screens: {
+                        "xs": "400px",
+                    },
+                    colors: {
+                        "primary": "#63cf17",
+                        "background-light": "#f7f8f6",
+                        "background-dark": "#182111",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope"],
+                        "arabic": ["Cairo", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Manrope', sans-serif;
+        }
+
+        body.font-arabic {
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark text-[#131b0e] dark:text-white transition-colors duration-300">
+    <!-- Top Navigation Bar -->
+    <header
+        class="sticky top-0 z-50 bg-background-light/90 dark:bg-background-dark/90 backdrop-blur-lg border-b border-[#ecf3e7] dark:border-[#2a3622] shadow-sm">
+        <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-20 py-3 sm:py-4 flex items-center justify-between gap-4">
+            <!-- Logo & Brand -->
+            <div class="flex items-center gap-2 sm:gap-3 flex-shrink-0">
+                <div class="h-10 sm:h-12 text-primary">
+                    <img src="logo.png" alt="Marravie Logo" class="h-full w-auto object-contain" />
+                </div>
+                <h1 class="text-lg sm:text-xl font-extrabold tracking-tight hidden xs:block" data-i18n="hero.title">
+                    Marravie</h1>
+            </div>
+
+            <!-- Search & Actions -->
+            <div class="flex items-center gap-2 sm:gap-6 flex-1 justify-end">
+                <div class="relative flex-1 max-w-[400px]">
+                    <span
+                        class="material-symbols-outlined absolute left-3 rtl:right-3 rtl:left-auto top-1/2 -translate-y-1/2 text-gray-400 text-sm sm:text-base">search</span>
+                    <input id="search-input"
+                        class="w-full pl-9 pr-4 py-2 bg-[#ecf3e7] dark:bg-[#2a3622] border-none rounded-xl text-xs sm:text-sm focus:ring-2 focus:ring-primary rtl:pl-4 rtl:pr-9 transition-all"
+                        placeholder="Search..." type="text" data-i18n="search.placeholder" />
+                </div>
+
+                <div class="flex-shrink-0">
+                    <button id="lang-toggle"
+                        class="px-2 sm:px-4 py-2 bg-primary/10 hover:bg-primary/20 text-primary rounded-xl text-[10px] sm:text-sm font-bold transition-all border border-primary/20 whitespace-nowrap">
+                        English
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main class="max-w-[1440px] mx-auto px-6 lg:px-20 py-8">
+
+        <div class="flex flex-col lg:flex-row gap-12">
+
+            <!-- Product Grid Area -->
+            <div class="flex-1">
+                <!-- Sort & Count Header -->
+                <div
+                    class="flex items-center justify-between mb-8 pb-4 border-b border-[#ecf3e7] dark:border-[#2a3622]">
+                    <p class="text-sm font-medium text-gray-500"><span id="product-count"
+                            class="text-[#131b0e] dark:text-white">6</span>
+                        <span data-i18n="sort.productsFound">products found</span>
+                    </p>
+                    <div class="flex items-center gap-2">
+                        <label class="text-sm font-medium text-gray-500" data-i18n="sort.label">Sort by:</label>
+                        <select id="sort-select"
+                            class="bg-[#ecf3e7] dark:bg-[#2a3622] border-none rounded-lg text-sm font-bold focus:ring-2 focus:ring-primary cursor-pointer px-4 py-2">
+                            <option value="featured" data-i18n="sort.options.featured">Featured</option>
+                            <option value="price-asc" data-i18n="sort.options.lowToHigh">Price: Low to High</option>
+                            <option value="price-desc" data-i18n="sort.options.highToLow">Price: High to Low</option>
+                            <option value="newest" data-i18n="sort.options.newest">Newest Arrival</option>
+                        </select>
+                    </div>
+                </div>
+                <!-- Grid -->
+                <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">
+                    <!-- Product Card 1: Activated Charcoal -->
+                    <div class="group flex flex-col product-card" data-price="95.00" data-rating="4.9"
+                        data-date="2024-01-01">
+                        <div
+                            class="relative aspect-[4/5] rounded-xl overflow-hidden bg-[#ecf3e7] dark:bg-[#2a3622] mb-4">
+                            <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                                src="products/1.png" />
+                            <button
+                                class="absolute bottom-4 left-4 right-4 bg-white/90 dark:bg-black/80 backdrop-blur py-3 rounded-lg font-bold text-sm opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+                                <span class="material-symbols-outlined text-lg">shopping_bag</span>
+                                <span data-i18n="product.quickAdd">إضافة سريعة</span>
+                            </button>
+                            <div class="absolute top-4 left-4 bg-primary text-white text-[10px] font-black uppercase tracking-widest px-2 py-1 rounded"
+                                data-i18n="product.bestSeller">
+                                الأكثر مبيعاً</div>
+                        </div>
+                        <h3 class="text-lg font-bold mb-1" data-i18n="product.charcoal.name">صابونة الفحم النشط 🖤</h3>
+                        <p class="text-sm text-primary font-medium mb-3" data-i18n="product.charcoal.desc">تنظيف عميق
+                            للمسام...</p>
+                        <div class="mt-auto flex items-center justify-between">
+                            <span class="text-xl font-extrabold line-height-1">95.00 <small
+                                    class="text-sm font-normal">جنية</small></span>
+                            <div class="flex gap-1 text-primary">
+                                <span class="material-symbols-outlined text-sm">star</span>
+                                <span class="text-xs font-bold self-center">4.9 (124)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product Card 2: Frankincense -->
+                    <div class="group flex flex-col product-card" data-price="95.00" data-rating="4.8"
+                        data-date="2024-01-02">
+                        <div
+                            class="relative aspect-[4/5] rounded-xl overflow-hidden bg-[#ecf3e7] dark:bg-[#2a3622] mb-4">
+                            <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                                src="products/2.png" />
+                            <button
+                                class="absolute bottom-4 left-4 right-4 bg-white/90 dark:bg-black/80 backdrop-blur py-3 rounded-lg font-bold text-sm opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+                                <span class="material-symbols-outlined text-lg">shopping_bag</span>
+                                <span data-i18n="product.quickAdd">إضافة سريعة</span>
+                            </button>
+                        </div>
+                        <h3 class="text-lg font-bold mb-1" data-i18n="product.frankincense.name">صابون اللبان الدكر ⭐
+                        </h3>
+                        <p class="text-sm text-primary font-medium mb-3" data-i18n="product.frankincense.desc">بتشد
+                            البشرة وتقلل التجاعيد...</p>
+                        <div class="mt-auto flex items-center justify-between">
+                            <span class="text-xl font-extrabold">95.00 <small
+                                    class="text-sm font-normal">جنية</small></span>
+                            <div class="flex gap-1 text-primary">
+                                <span class="material-symbols-outlined text-sm">star</span>
+                                <span class="text-xs font-bold self-center">4.8 (89)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product Card 3: Makhmariya -->
+                    <div class="group flex flex-col product-card" data-price="75.00" data-rating="5.0"
+                        data-date="2024-01-03">
+                        <div
+                            class="relative aspect-[4/5] rounded-xl overflow-hidden bg-[#ecf3e7] dark:bg-[#2a3622] mb-4">
+                            <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                                src="products/3.png" />
+                            <button
+                                class="absolute bottom-4 left-4 right-4 bg-white/90 dark:bg-black/80 backdrop-blur py-3 rounded-lg font-bold text-sm opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+                                <span class="material-symbols-outlined text-lg">shopping_bag</span>
+                                <span data-i18n="product.quickAdd">إضافة سريعة</span>
+                            </button>
+                            <div
+                                class="absolute top-4 left-4 bg-red-500 text-white text-[10px] font-black uppercase tracking-widest px-2 py-1 rounded">
+                                عرض خاص</div>
+                        </div>
+                        <h3 class="text-lg font-bold mb-1" data-i18n="product.makhmariya.name">مخمرية الجسم 😍</h3>
+                        <p class="text-sm text-primary font-medium mb-3" data-i18n="product.makhmariya.desc">ثبات عالي
+                            وتفتيح...</p>
+                        <div class="mt-auto flex items-center justify-between">
+                            <span class="text-xl font-extrabold">75.00 <small
+                                    class="text-sm font-normal">جنية</small></span>
+                            <div class="flex gap-1 text-primary">
+                                <span class="material-symbols-outlined text-sm">star</span>
+                                <span class="text-xs font-bold self-center">5.0 (56)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product Card 4: Blue Nila -->
+                    <div class="group flex flex-col product-card" data-price="140.00" data-rating="4.7"
+                        data-date="2024-01-04">
+                        <div
+                            class="relative aspect-[4/5] rounded-xl overflow-hidden bg-[#ecf3e7] dark:bg-[#2a3622] mb-4">
+                            <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                                src="products/4.png" />
+                            <button
+                                class="absolute bottom-4 left-4 right-4 bg-white/90 dark:bg-black/80 backdrop-blur py-3 rounded-lg font-bold text-sm opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+                                <span class="material-symbols-outlined text-lg">shopping_bag</span>
+                                <span data-i18n="product.quickAdd">إضافة سريعة</span>
+                            </button>
+                        </div>
+                        <h3 class="text-lg font-bold mb-1" data-i18n="product.nila.name">صابون النيلة الزرقاء 💙</h3>
+                        <p class="text-sm text-primary font-medium mb-3" data-i18n="product.nila.desc">بتفتح البشرة
+                            وتشيل الجلد الميت...</p>
+                        <div class="mt-auto flex items-center justify-between">
+                            <span class="text-xl font-extrabold">140.00 <small
+                                    class="text-sm font-normal">جنية</small></span>
+                            <div class="flex gap-1 text-primary">
+                                <span class="material-symbols-outlined text-sm">star</span>
+                                <span class="text-xs font-bold self-center">4.7 (210)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product Card 5: Royal Collection -->
+                    <div class="group flex flex-col product-card" data-price="900.00" data-rating="5.0"
+                        data-date="2024-01-05">
+                        <div
+                            class="relative aspect-[4/5] rounded-xl overflow-hidden bg-[#ecf3e7] dark:bg-[#2a3622] mb-4">
+                            <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                                src="products/5.jpeg" />
+                            <span
+                                class="absolute top-4 right-4 bg-red-500 text-white text-[10px] font-black px-2 py-1 rounded">-25%</span>
+                            <button
+                                class="absolute bottom-4 left-4 right-4 bg-white/90 dark:bg-black/80 backdrop-blur py-3 rounded-lg font-bold text-sm opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+                                <span class="material-symbols-outlined text-lg">shopping_bag</span>
+                                <span data-i18n="product.quickAdd">إضافة سريعة</span>
+                            </button>
+                        </div>
+                        <h3 class="text-lg font-bold mb-1" data-i18n="product.royal.name">المجموعة الملكية 👑</h3>
+                        <p class="text-sm text-primary font-medium mb-3" data-i18n="product.royal.desc">عناية ملوك في
+                            بيتك...</p>
+                        <div class="mt-auto flex items-center justify-between">
+                            <div class="flex flex-col">
+                                <span class="text-xs text-gray-500 line-through">1200.00 جنية</span>
+                                <span class="text-xl font-extrabold text-red-600">900.00 <small
+                                        class="text-sm font-normal">جنية</small></span>
+                            </div>
+                            <div class="flex gap-1 text-primary">
+                                <span class="material-symbols-outlined text-sm">star</span>
+                                <span class="text-xs font-bold self-center">5.0 (45)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product Card 6: Karkar Mask -->
+                    <div class="group flex flex-col product-card" data-price="500.00" data-rating="4.9"
+                        data-date="2024-01-06">
+                        <div
+                            class="relative aspect-[4/5] rounded-xl overflow-hidden bg-[#ecf3e7] dark:bg-[#2a3622] mb-4">
+                            <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                                src="products/6.jpeg" />
+                            <button
+                                class="absolute bottom-4 left-4 right-4 bg-white/90 dark:bg-black/80 backdrop-blur py-3 rounded-lg font-bold text-sm opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+                                <span class="material-symbols-outlined text-lg">shopping_bag</span>
+                                <span data-i18n="product.quickAdd">إضافة سريعة</span>
+                            </button>
+                        </div>
+                        <h3 class="text-lg font-bold mb-1" data-i18n="product.karkar.name">ماسك الكركار السوداني 🌿</h3>
+                        <p class="text-sm text-primary font-medium mb-3" data-i18n="product.karkar.desc">شعر ناعم، لامع،
+                            وصحي...</p>
+                        <div class="mt-auto flex items-center justify-between">
+                            <div class="flex flex-col">
+                                <span class="text-xs text-gray-500 line-through">600.00 جنية</span>
+                                <span class="text-xl font-extrabold">500.00 <small
+                                        class="text-sm font-normal">جنية</small></span>
+                            </div>
+                            <div class="flex gap-1 text-primary">
+                                <span class="material-symbols-outlined text-sm">star</span>
+                                <span class="text-xs font-bold self-center">4.9 (32)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Load More -->
+                <div class="mt-16 flex justify-center">
+                    <button
+                        class="px-8 py-4 bg-[#ecf3e7] dark:bg-[#2a3622] hover:bg-primary hover:text-white transition-all rounded-xl font-bold text-sm uppercase tracking-widest"
+                        data-i18n="loadMore">
+                        Load More Products
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- Footer -->
+    <footer class="bg-[#131b0e] text-white py-20 mt-20">
+        <div class="max-w-[1440px] mx-auto px-6 lg:px-20 grid grid-cols-1 md:grid-cols-4 gap-12">
+            <div class="space-y-6">
+                <div class="flex items-center gap-3">
+                    <div class="h-10 text-primary">
+                        <img src="logo.png" alt="Natural Bloom Logo" class="h-full w-auto object-contain" />
+                    </div>
+                    <span class="text-xl font-extrabold" data-i18n="hero.title">Marravie</span>
+                </div>
+                <p class="text-gray-400 text-sm leading-relaxed" data-i18n="footer.about">Sustainable, ethical, and
+                    organic skincare for your
+                    daily ritual. Crafted with love.</p>
+                <div class="flex gap-4">
+                    <a class="size-10 rounded-full border border-gray-700 flex items-center justify-center hover:bg-primary transition-colors"
+                        href="https://www.facebook.com/profile.php?id=61587018096962" target="_blank"
+                        aria-label="Facebook">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                            viewBox="0 0 16 16">
+                            <path
+                                d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z" />
+                        </svg>
+                    </a>
+                    <a class="size-10 rounded-full border border-gray-700 flex items-center justify-center hover:bg-primary transition-colors"
+                        href="https://wa.me/201275965615" target="_blank" aria-label="WhatsApp">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                            viewBox="0 0 16 16">
+                            <path
+                                d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.06 3.97l-1.127 4.121 4.212-1.105a7.847 7.847 0 0 0 3.785.968h.003c4.367 0 7.926-3.558 7.93-7.926a7.845 7.845 0 0 0-2.326-5.626m-5.607 11.48h-.006c-1.232 0-2.443-.332-3.497-.963l-.25-.149-2.5 1.054.678-2.47-.163-.259a6.546 6.546 0 0 1-1.006-3.419c0-3.6 2.933-6.531 6.533-6.531 1.744 0 3.384.679 4.616 1.912a6.526 6.526 0 0 1 1.912 4.617c-.004 3.6-2.937 6.533-6.535 6.533zm3.557-4.86c-.195-.097-1.156-.57-1.334-.635-.178-.066-.307-.098-.437.097-.129.195-.502.635-.615.761-.113.125-.226.142-.421.045-.195-.1-.824-.304-1.57-.97-.58-.517-1.012-1.159-1.126-1.355-.113-.197-.012-.303.086-.401.088-.087.195-.226.293-.341.097-.116.129-.197.195-.329.066-.131.033-.247-.016-.345-.05-.097-.437-1.052-.598-1.44-.157-.38-.31-.328-.437-.328-.112-.001-.242-.001-.371-.001-.129 0-.341.049-.519.243-.178.195-.679.664-.679 1.62 0 .956.696 1.88 1.791 2.026.113.015 2.133 3.264 5.167 4.57.72.31 1.282.495 1.72.634.723.23 1.381.197 1.901.12.579-.086 1.156-.473 1.317-.929.161-.456.161-.847.113-.929-.048-.082-.178-.131-.373-.228z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            <div>
+                <h4 class="font-bold mb-6" data-i18n="footer.explore">Explore</h4>
+                <ul class="space-y-4 text-sm text-gray-400">
+                    <li><a class="hover:text-primary transition-colors" href="#" data-i18n="nav.shopAll">Shop All</a>
+                    </li>
+                    <li><a class="hover:text-primary transition-colors" href="#" data-i18n="footer.bundles">Bundles &
+                            Kits</a></li>
+                    <li><a class="hover:text-primary transition-colors" href="#"
+                            data-i18n="footer.subscription">Subscription</a></li>
+                    <li><a class="hover:text-primary transition-colors" href="#"
+                            data-i18n="footer.wholesale">Wholesale</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold mb-6" data-i18n="footer.care">Customer Care</h4>
+                <ul class="space-y-4 text-sm text-gray-400">
+                    <li><a class="hover:text-primary transition-colors" href="#" data-i18n="footer.shipping">Shipping
+                            Policy</a></li>
+                    <li><a class="hover:text-primary transition-colors" href="#" data-i18n="footer.returns">Returns &
+                            Refunds</a></li>
+                    <li><a class="hover:text-primary transition-colors" href="#" data-i18n="footer.faq">FAQ</a></li>
+                    <li><a class="hover:text-primary transition-colors" href="#" data-i18n="footer.contact">Contact
+                            Us</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold mb-6" data-i18n="footer.join">Join Our Garden</h4>
+                <p class="text-sm text-gray-400 mb-6" data-i18n="footer.subscribe">Subscribe for tips on natural
+                    skincare and early access to new
+                    drops.</p>
+                <div class="flex gap-2">
+                    <input class="bg-white/5 border-white/10 rounded-lg text-sm flex-1 focus:ring-primary"
+                        placeholder="Your email" type="email" data-i18n="footer.emailPlaceholder" />
+                    <button class="bg-primary text-white px-4 py-2 rounded-lg font-bold text-xs uppercase"
+                        data-i18n="footer.joinButton">Join</button>
+                </div>
+            </div>
+        </div>
+        <div
+            class="max-w-[1440px] mx-auto px-6 lg:px-20 mt-20 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-500">
+            <p data-i18n="footer.rights">© 2026 Natural Bloom Artisan Skincare. All rights reserved.</p>
+            <div class="flex gap-6">
+                <a href="#" data-i18n="footer.privacy">Privacy Policy</a>
+                <a href="#" data-i18n="footer.terms">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/201275965615" target="_blank"
+        class="fixed bottom-6 right-6 z-[100] bg-[#25D366] text-white p-4 rounded-full shadow-lg hover:scale-110 transition-transform flex items-center justify-center">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 16 16">
+            <path
+                d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.06 3.97l-1.127 4.121 4.212-1.105a7.847 7.847 0 0 0 3.785.968h.003c4.367 0 7.926-3.558 7.93-7.926a7.845 7.845 0 0 0-2.326-5.626m-5.607 11.48h-.006c-1.232 0-2.443-.332-3.497-.963l-.25-.149-2.5 1.054.678-2.47-.163-.259a6.546 6.546 0 0 1-1.006-3.419c0-3.6 2.933-6.531 6.533-6.531 1.744 0 3.384.679 4.616 1.912a6.526 6.526 0 0 1 1.912 4.617c-.004 3.6-2.937 6.533-6.535 6.533zm3.557-4.86c-.195-.097-1.156-.57-1.334-.635-.178-.066-.307-.098-.437.097-.129.195-.502.635-.615.761-.113.125-.226.142-.421.045-.195-.1-.824-.304-1.57-.97-.58-.517-1.012-1.159-1.126-1.355-.113-.197-.012-.303.086-.401.088-.087.195-.226.293-.341.097-.116.129-.197.195-.329.066-.131.033-.247-.016-.345-.05-.097-.437-1.052-.598-1.44-.157-.38-.31-.328-.437-.328-.112-.001-.242-.001-.371-.001-.129 0-.341.049-.519.243-.178.195-.679.664-.679 1.62 0 .956.696 1.88 1.791 2.026.113.015 2.133 3.264 5.167 4.57.72.31 1.282.495 1.72.634.723.23 1.381.197 1.901.12.579-.086 1.156-.473 1.317-.929.161-.456.161-.847.113-.929-.048-.082-.178-.131-.373-.228z" />
+        </svg>
+    </a>
+
+    <script src="translations.js"></script>
+    <script src="search.js"></script>
+</body>
+
+</html>
